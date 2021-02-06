@@ -1800,6 +1800,13 @@ void Game::keyboardEvent(const irr::SEvent& event)
                 this->pIrrlichtDevice->closeDevice();
                 break;
             }
+            case irr::KEY_F12:
+            {
+                irr::video::IImage* pScreenshot = this->pVideoDriver->createScreenShot();
+                if (this->pVideoDriver->writeImageToFile(pScreenshot, "screenShots/screenshot.bmp") == false)
+                    std::cout << "Unable to save screenshot" << std::endl;
+                pScreenshot->drop();
+            }
             default:
             {
                 break;

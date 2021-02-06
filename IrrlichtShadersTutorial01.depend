@@ -1001,3 +1001,18 @@
 1612578942 source:d:\myprograms\irrlichtshaderstutorial01-mingw-w64\main.cpp
 	"Game.h"
 
+1612601353 source:d:\myprograms\irrlichtshadertutorial01-mingw-w64\game\game.cpp
+	"Game.h"
+
+1612581378 d:\myprograms\irrlichtshadertutorial01-mingw-w64\game\game.h
+	<iostream>
+	<string>
+	<cmath>
+	<fstream>
+	<vector>
+	<iomanip>
+	<Irrlicht.h>
+
+1612578942 source:d:\myprograms\irrlichtshadertutorial01-mingw-w64\main.cpp
+	"Game.h"
+
