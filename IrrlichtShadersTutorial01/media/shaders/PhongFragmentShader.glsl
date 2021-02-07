@@ -231,7 +231,7 @@ void main()
     {
         if (texture2D(Texture0, gl_TexCoord[0].st).a == 0.0)
             discard;
-        vec4 finalColor = (DiffuseMaterialColor + texture2D(Texture0, gl_TexCoord[0].st)) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb + totalSpecularLighting.rgb, 1.0);
+        vec4 finalColor = (DiffuseMaterialColor * texture2D(Texture0, gl_TexCoord[0].st)) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb + totalSpecularLighting.rgb, 1.0);
         finalColor.a = texture2D(Texture0, gl_TexCoord[0].st).a;
         gl_FragColor = finalColor;
     }
