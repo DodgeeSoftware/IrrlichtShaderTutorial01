@@ -124,7 +124,7 @@ void main()
         vec3 diffuse = s * (DiffuseMaterialColor * vec4(DirectionalLightColor[3 * i + 0], DirectionalLightColor[3 * i + 1], DirectionalLightColor[3 * i + 2], DirectionalLightColor[3 * i + 3])).rgb;
 
         totalDiffuseLighting = totalDiffuseLighting + diffuse;
-        totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
+        //totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
     }
 
     // DO POINT LIGHTS
@@ -149,7 +149,7 @@ void main()
         float attenuation = (1.0 / (PointLightAttenuation[i * 3 + 0] + PointLightAttenuation[i * 3 + 1] * distanceToLightSource + PointLightAttenuation[i * 3 + 2] * distanceToLightSource * distanceToLightSource));
 
         totalDiffuseLighting = totalDiffuseLighting + diffuse * attenuation;
-        totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
+        //totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
     }
 
     // DO SPOT LIGHTS
@@ -190,16 +190,16 @@ void main()
 
             // Add lighting to the surface
             totalDiffuseLighting = totalDiffuseLighting + diffuse * attenuation * intensity;
-            totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
+            //totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
         }
     }
     if (Texture0InUse == 1.0)
     {
-        gl_FragColor = (AmbientLight + vec4(totalDiffuseLighting, 1.0)) * texture2D(Texture0, gl_TexCoord[0].st);
+        gl_FragColor = (vec4(AmbientLight.rgb + totalDiffuseLighting, 1.0)) * texture2D(Texture0, gl_TexCoord[0].st);
     }
     else
     {
-        gl_FragColor = (AmbientLight + vec4(totalDiffuseLighting, 1.0)) * DiffuseMaterialColor;
+        gl_FragColor = (vec4(AmbientLight.rgb + totalDiffuseLighting, 1.0)) * DiffuseMaterialColor;
     }
 
     // TODO: Implement EmmissiveMaterialColor
