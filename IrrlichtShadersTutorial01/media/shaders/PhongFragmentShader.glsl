@@ -137,9 +137,9 @@ void main()
         vec3 specular = t * (SpecularMaterialColor * vec4(DirectionalLightColor[3 * i + 0], DirectionalLightColor[3 * i + 1], DirectionalLightColor[3 * i + 2], DirectionalLightColor[3 * i + 3])).rgb;
 
         totalDiffuseLighting = totalDiffuseLighting + diffuse;
-        totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
+        //totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
         totalSpecularLighting = totalSpecularLighting + specular;
-        totalSpecularLighting = clamp(totalSpecularLighting, 0.0, 1.0);
+        //totalSpecularLighting = clamp(totalSpecularLighting, 0.0, 1.0);
     }
 
     // DO POINT LIGHTS
@@ -173,9 +173,9 @@ void main()
         float attenuation = (1.0 / (PointLightAttenuation[i * 3 + 0] + PointLightAttenuation[i * 3 + 1] * distanceToLightSource + PointLightAttenuation[i * 3 + 2] * distanceToLightSource * distanceToLightSource));
 
         totalDiffuseLighting = totalDiffuseLighting + (diffuse) * attenuation;
-        totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
+        //totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
         totalSpecularLighting = totalSpecularLighting + specular * attenuation;
-        totalSpecularLighting = clamp(totalSpecularLighting, 0.0, 1.0);
+        //totalSpecularLighting = clamp(totalSpecularLighting, 0.0, 1.0);
     }
 
     // DO SPOT LIGHTS
@@ -199,7 +199,7 @@ void main()
             float a = cos(SpotLightInnerCone[i]);
             float d = dot(lightVec, -lightDirection);
             if (a < d)
-             intensity = 1.0 - pow(clamp(a / d, 0, 1), 2.0);
+                intensity = 1.0 - pow(clamp(a / d, 0, 1), 2.0);
 
             // Grab the distance between the light and the surface
             float distanceToLightSource = length(lightPosition - Position.xyz);
@@ -222,22 +222,22 @@ void main()
 
             // Add lighting to the surface
             totalDiffuseLighting = totalDiffuseLighting + diffuse * attenuation * intensity;
-            totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
+            //totalDiffuseLighting = clamp(totalDiffuseLighting, 0.0, 1.0);
             totalSpecularLighting = totalSpecularLighting + specular * attenuation;
-            totalSpecularLighting = clamp(totalSpecularLighting, 0.0, 1.0);
+            //totalSpecularLighting = clamp(totalSpecularLighting, 0.0, 1.0);
         }
     }
     if (Texture0InUse == 1.0)
     {
         if (texture2D(Texture0, gl_TexCoord[0].st).a == 0.0)
             discard;
-        vec4 finalColor = (DiffuseMaterialColor * texture2D(Texture0, gl_TexCoord[0].st)) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb + totalSpecularLighting.rgb, 1.0);
+        vec4 finalColor = (DiffuseMaterialColor * texture2D(Texture0, gl_TexCoord[0].st)) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb, 1.0) + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
         finalColor.a = texture2D(Texture0, gl_TexCoord[0].st).a;
         gl_FragColor = finalColor;
     }
     else
     {
-        vec4 finalColor = (DiffuseMaterialColor) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb + totalSpecularLighting.rgb, 1.0);
+        vec4 finalColor = (DiffuseMaterialColor) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb, 1.0) + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
         finalColor.a = texture2D(Texture0, gl_TexCoord[0].st).a;
         gl_FragColor = finalColor;
     }
