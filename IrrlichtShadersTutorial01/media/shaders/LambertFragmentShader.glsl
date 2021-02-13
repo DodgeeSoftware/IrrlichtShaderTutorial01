@@ -195,7 +195,7 @@ void main()
     }
     if (Texture0InUse == 1.0)
     {
-        gl_FragColor = EmmissiveMaterialColor + (vec4(AmbientLight.rgb + totalDiffuseLighting, 1.0)) * texture2D(Texture0, gl_TexCoord[0].st);
+        gl_FragColor = EmmissiveMaterialColor + (vec4(AmbientLight.rgb + totalDiffuseLighting, 1.0)) * DiffuseMaterialColor * texture2D(Texture0, gl_TexCoord[0].st);
     }
     else
     {
