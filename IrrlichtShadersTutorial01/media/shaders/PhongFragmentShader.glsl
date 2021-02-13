@@ -231,13 +231,13 @@ void main()
     {
         if (texture2D(Texture0, gl_TexCoord[0].st).a == 0.0)
             discard;
-        vec4 finalColor = (DiffuseMaterialColor * texture2D(Texture0, gl_TexCoord[0].st)) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb, 1.0) + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
+        vec4 finalColor = EmmissiveMaterialColor + (vec4(AmbientLight.rgb + totalDiffuseLighting, 1.0)) * texture2D(Texture0, gl_TexCoord[0].st) + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
         finalColor.a = texture2D(Texture0, gl_TexCoord[0].st).a;
         gl_FragColor = finalColor;
     }
     else
     {
-        vec4 finalColor = (DiffuseMaterialColor) * vec4(AmbientLight.rgb + totalDiffuseLighting.rgb, 1.0) + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
+        vec4 finalColor = EmmissiveMaterialColor + vec4(AmbientLight.rgb + totalDiffuseLighting.rgb, 1.0) * DiffuseMaterialColor + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
         finalColor.a = texture2D(Texture0, gl_TexCoord[0].st).a;
         gl_FragColor = finalColor;
     }
