@@ -238,7 +238,7 @@ void main()
     else
     {
         vec4 finalColor = EmmissiveMaterialColor + vec4(AmbientLight.rgb + totalDiffuseLighting.rgb, 1.0) * DiffuseMaterialColor + vec4(totalSpecularLighting.rgb, 1.0) * vec4(SpecularMaterialColor.rgb, 1.0);
-        finalColor.a = texture2D(Texture0, gl_TexCoord[0].st).a;
+        finalColor.a = DiffuseMaterialColor.a;
         gl_FragColor = finalColor;
     }
 }
